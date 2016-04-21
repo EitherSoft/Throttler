@@ -1,5 +1,4 @@
 import tornadoredis
-import tornado.httpserver
 from tornado.web import Application
 from tornado.ioloop import IOLoop
 from tornado.options import options
