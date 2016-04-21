@@ -1,6 +1,8 @@
 Request Throttler
 =================
 
+Uses Redis for data store.
+
 Create settings for domain:
 -------
 ``` shell
@@ -22,4 +24,14 @@ Parameters:
 ```
 domain:         domain name
 request_time:   last page generation time in seconds
+```
+
+Clear domain data
+------
+``` shell
+$ curl -X DELETE "http://server.tld:port/delay?domain=google.com"
+```
+Parameters:
+```
+domain:         domain name
 ```
