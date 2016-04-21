@@ -1,5 +1,6 @@
 import logging.config
 import tornado
+import os
 from tornado.options import define, options
 
 
@@ -9,11 +10,16 @@ define("debug", default=False, help="debug mode")
 
 tornado.options.parse_command_line()
 
+f = open(os.path.abspath(os.path.dirname(__file__)) + '/calculate_next_request_time.lua')
+
 settings = {
     'debug': options.debug,
     'duration': 300,
-    'limit': 10
+    'limit': 10,
+    'calculate_next_request_time': f.read()
 }
+
+f.close()
 
 # Redis settings
 REDIS = {
