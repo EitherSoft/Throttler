@@ -20,6 +20,7 @@ class DelayHandler(web.RequestHandler):
 
         self.set_header('Content-Type', 'application/json')
         if domain:
+            current_time = time.time()
             domain_settings = yield gen.Task(self._prepare_domain_settings, domain)
 
             key = 'next_request_time:%s' % domain
@@ -28,10 +29,10 @@ class DelayHandler(web.RequestHandler):
                 self.db.eval,
                 self.calculate_next_request_time,
                 [key],
-                [domain_settings['request_timeout'], last_request_time, time.time()]
+                [domain_settings['request_timeout'], last_request_time, current_time]
             )
 
-            timeout = round(float(next_request_time) - time.time(), 3)
+            timeout = round(float(next_request_time) - current_time, 3)
 
             self.finish(json.dumps({
                 'timeout': timeout if timeout > 0 else 0
